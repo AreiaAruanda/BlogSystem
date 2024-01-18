@@ -15,37 +15,26 @@ db.Blogs.RemoveRange(db.Blogs);
 db.SaveChanges();
 #endregion
 
-//creating correct file paths
-string projectDirectory = @"C:\Users\lipsk\source\repos\BlogSystem\";
-//Console.WriteLine($"Project Directory: {projectDirectory}");
-
-string csvFilePathUser = Path.Combine(Directory.GetParent(projectDirectory).FullName, "User.csv");
-string csvFilePathBlog = Path.Combine(Directory.GetParent(projectDirectory).FullName, "Blog.csv");
-string csvFilePathPost = Path.Combine(Directory.GetParent(projectDirectory).FullName, "Post.csv");
-
 // Reading data from CSV files
-var users = ReadUserFromCsv(csvFilePathUser);
-var blogs = ReadBlogFromCsv(csvFilePathBlog);
-var posts = ReadPostFromCsv(csvFilePathPost);
+var users = ReadUserFromCsv();
+var blogs = ReadBlogFromCsv();
+var posts = ReadPostFromCsv();
 
 // Adding data to db
 db.Users.AddRange(users);
 db.Blogs.AddRange(blogs);
 db.Posts.AddRange(posts);
-
 db.SaveChanges();
 
 // Displaying the data
 DisplayData(db);
 
 //Read from CSVs
-#region
-static List<User> ReadUserFromCsv(string filePath)
+static List<User> ReadUserFromCsv()
 {
     var users = new List<User>();
     var processedIds = new List<int>(); //tracks if user already exists
-    var lines = File.ReadAllLines(filePath);
-
+    var lines = File.ReadAllLines("../../../User.csv");
     foreach (var line in lines)
     {
         var parts = line.Split(",");
@@ -67,12 +56,11 @@ static List<User> ReadUserFromCsv(string filePath)
     return users;           
 }
 db.SaveChanges();
-
-static List<Blog> ReadBlogFromCsv(string filePath)
+static List<Blog> ReadBlogFromCsv()
 {
     var processedIds = new List<int>(); //tracks if blog already exists
     var blogs = new List<Blog>();
-    var lines = File.ReadAllLines(filePath); 
+    var lines = File.ReadAllLines("../../../Blog.csv");
 
     foreach (var line in lines)
     {
@@ -96,10 +84,10 @@ static List<Blog> ReadBlogFromCsv(string filePath)
 }
 db.SaveChanges();
 
-static List<Post> ReadPostFromCsv(string filePath)
+static List<Post> ReadPostFromCsv()
 {
     var posts = new List<Post>();
-    var lines = File.ReadAllLines(filePath); 
+    var lines = File.ReadAllLines("../../../Post.csv");
 
     foreach (var line in lines)
     {
@@ -116,7 +104,6 @@ static List<Post> ReadPostFromCsv(string filePath)
     return posts;
 }
 db.SaveChanges();
-#endregion
 
 //Output
 static void DisplayData(BloggingContext db)

@@ -14,22 +14,6 @@ public class BloggingContext : DbContext
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         DbPath = System.IO.Path.Join(path, "blogging2.db");
-        //var folder = Environment.CurrentDirectory;
-        //DbPath = System.IO.Path.Join(folder, "blogging3.db");
-    }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasMany(b => b.Posts)
-            .WithOne(b => b.Blog)
-            .HasForeignKey(b => b.BlogId)
-            .HasPrincipalKey(b => b.Id);
-
-        modelBuilder.Entity<User>()
-           .HasMany(u => u.Posts)
-           .WithOne(u => u.User)
-           .HasForeignKey(u => u.UserId)
-           .HasPrincipalKey(u => u.Id);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
