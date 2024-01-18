@@ -34,7 +34,7 @@ static List<User> ReadUserFromCsv()
 {
     var users = new List<User>();
     var processedIds = new List<int>(); //tracks if user already exists
-    var lines = File.ReadAllLines("../../../User.csv");
+    var lines = File.ReadAllLines("User.csv");
     foreach (var line in lines)
     {
         var parts = line.Split(",");
@@ -60,7 +60,7 @@ static List<Blog> ReadBlogFromCsv()
 {
     var processedIds = new List<int>(); //tracks if blog already exists
     var blogs = new List<Blog>();
-    var lines = File.ReadAllLines("../../../Blog.csv");
+    var lines = File.ReadAllLines("Blog.csv");
 
     foreach (var line in lines)
     {
@@ -87,7 +87,7 @@ db.SaveChanges();
 static List<Post> ReadPostFromCsv()
 {
     var posts = new List<Post>();
-    var lines = File.ReadAllLines("../../../Post.csv");
+    var lines = File.ReadAllLines("Post.csv");
 
     foreach (var line in lines)
     {
